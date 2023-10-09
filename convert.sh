@@ -53,6 +53,6 @@ pandoc --from=markdown \
        --template=template.html \
        --include-in-header=style.html \
        --mathjax \
-       "$filter" \
+       $filter \
        --output="$2" \
        "$1"
