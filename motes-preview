@@ -13,14 +13,20 @@ if [ -z  "$1" ]; then
     exit 1
 fi
 
+# Ensure that motes-convert can be found for running it with bash.
+if [ ! -x "$(command -v motes-convert)" ] && [ ! -f motes-convert ]; then
+    >&2 echo "$0: Failed to find motes-convert in PATH or locally"
+    exit 1
+fi
+
 # Ensure the `inotifywait` command exists.
-if [ -z "$(which inotifywait)" ]; then
+if [ ! -x "$(command -v inotifywait)" ]; then
     >&2 echo "$0: inotifywait is not installed"
     exit 1
 fi
 
 # Ensure the python exists.
-if [ -z "$(which python)" ]; then
+if [ ! -x "$(command -v python)" ]; then
     >&2 echo "$0: python is not installed"
     exit 1
 fi

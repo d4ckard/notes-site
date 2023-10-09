@@ -12,6 +12,12 @@ if [ -z "$2" ]; then
     exit 1
 fi
 
+# Ensure that motes-convert can be found for running it with bash.
+if [ ! -x "$(command -v motes-convert)" ] && [ ! -f motes-convert ]; then
+    >&2 echo "$0: Failed to find motes-convert in PATH or locally"
+    exit 1
+fi
+
 src="$1"
 dest="$2"
 

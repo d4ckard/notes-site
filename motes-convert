@@ -26,7 +26,7 @@ if [ "$out_ext" != "html" ]; then
 fi
 
 # Ensure `pandoc` exists.
-if [ -z "$(which pandoc)" ]; then
+if [ ! -x "$(command -v pandoc)" ]; then
     >&2 echo "$0: pandoc is not installed"
     exit 1
 fi
@@ -35,25 +35,25 @@ fi
 echo "$0: Converting $1 -> $2 ..."
 
 filter=""
-if [ -n "$(which mermaid-filter)" ]; then
+if [ -x "$(command -v mermaid-filter)" ]; then
     # Set environment variables to configure mermaid-filter.
     export MERMAID_FILTRE_FORMAT="svg"
     export MERMAID_FILTER_THEME="forest"
     filter+="--filter=mermaid-filter"
     # Remove mermaid-filter.err if it was created but is empty.
-    trap '[[ -f mermaid-filter.err && ! -s mermaid-filter.err ]] && rm -f mermaid-filter.err' EXIT
+    trap '[ -f mermaid-filter.err ] && [ ! -s mermaid-filter.err ] && rm -f mermaid-filter.err' EXIT
 else
     >&2 echo "$0: Warning: mermaid-filter is not installed, and will not be used"
     >&2 echo "$0: Install it from here: https://github.com/raghur/mermaid-filter"
 fi
 
+# Don't quote $filter, so it fully disappears when empty.
 pandoc --from=markdown \
        --to=html \
        --standalone \
        --template=template.html \
        --include-in-header=style.html \
        --mathjax \
-       # Don't quote $filter, so it fully disappears when empty.
        $filter \
        --output="$2" \
        "$1"
