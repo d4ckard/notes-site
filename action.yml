@@ -1,0 +1,33 @@
+name: Deploy Markdown notes
+description: Covert Markdown notes to HTML and deploy them. Uses Pandoc with mermaid-filter.
+inputs:
+  from:
+    description: Repository to find the notes in
+    required: true
+  to:
+    description: Folder to build the site into
+    required: true
+runs:
+  using: composite
+  steps:
+    # Checkout the required scripts.
+    - name: Checkout scripts
+      uses: actions/checkout@v4
+      with:
+        repository: d4ckard/notes-site
+    # Checkout the notes into their own nested directory.
+    - name: Checkout notes
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.from }}
+        path: from-notes
+    # Setup mermaid-filter using node.
+    - name: Setup node
+      uses: actions/setup-node@v3
+    - run: npm install --global mermaid-filter
+      shell: bash
+    - name: Setup pandoc
+      uses: nikeee/setup-pandoc@v1
+    # Build the site.
+    - run: bash build-site.sh from-notes ${{ inputs.to }}
+      shell: bash
