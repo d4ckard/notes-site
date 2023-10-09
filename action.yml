@@ -1,5 +1,5 @@
-name: Deploy Markdown notes
-description: Covert Markdown notes to HTML and deploy them. Uses Pandoc with mermaid-filter.
+name: Build Markdown notes
+description: Covert Markdown notes to HTML, using Pandoc with mermaid-filter
 inputs:
   from:
     description: Repository to find the notes in
@@ -14,7 +14,7 @@ runs:
     - name: Checkout scripts
       uses: actions/checkout@v4
       with:
-        repository: d4ckard/notes-site
+        repository: d4ckard/motes
     # Checkout the notes into their own nested directory.
     - name: Checkout notes
       uses: actions/checkout@v4
@@ -29,5 +29,5 @@ runs:
     - name: Setup pandoc
       uses: nikeee/setup-pandoc@v1
     # Build the site.
-    - run: bash build-site.sh from-notes ${{ inputs.to }}
+    - run: bash motes-build from-notes ${{ inputs.to }}
       shell: bash

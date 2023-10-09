@@ -32,22 +32,22 @@ echo "$0: Creating $dest directory to build into"
 
 # Re-create the directory structure of $src in $dest.
 find "$src" -type d | while read -r dir; do
-    mkdir -p "$dest${dir#$src}"
+    mkdir -p "$dest${dir#"$src"}"
 done
 
 echo "$0: Converting all Markdown files to HTML"
 
 find "$src" -name "*.md" -type f | while read -r file; do
-    outfile="$dest${file#$src}"
+    outfile="$dest${file#"$src"}"
     outfile="${outfile%.md}.html"
-    bash convert.sh "$file" "$outfile"
+    bash motes-convert "$file" "$outfile"
 done
 
 echo "$0: Copying all .pdf, .png, and .jpg assets"
 
 find "$src" \( -name "*.pdf" -o -name "*.png" -o -name "*.jpg" \) \
      -type f | while read -r file; do
-    outfile="$dest${file#$src}"
+    outfile="$dest${file#"$src"}"
     echo "$0: Copying $file -> $outfile ..."
     cp "$file" "$outfile"
 done

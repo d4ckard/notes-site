@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Compile a given Markdown file into HTML and open this document
-# in Firefox. After that, watch the Markdown file for any changes
+# a browser. After that, watch the Markdown file for any changes
 # and automatically re-compile it. The output HTML file is stored
 # in /tmp and deleted once this scrips is terminated.
 
@@ -38,7 +38,7 @@ fi
 trap 'rm -f -- "$outfile"' EXIT
 
 echo "Compiling $1 into $outfile"
-bash convert.sh "$1" "$outfile"
+bash motes-convert "$1" "$outfile"
 
 echo "Opening $outfile in browser"
 python -m webbrowser -n "$outfile"
@@ -51,5 +51,5 @@ inotifywait --quiet \
 	    "$1" \
     | while read -r changed; do
     echo "$changed"
-    bash convert.sh "$1" "$outfile"
+    bash motes-convert "$1" "$outfile"
 done
