@@ -9,19 +9,19 @@ set -e
 
 # Ensure arguments are OK.
 if [ -z  "$1" ]; then
-    echo "usage: $0 NOTE-FILE"
+    >&2 echo "usage: $0 NOTE-FILE"
     exit 1
 fi
 
 # Ensure the `inotifywait` command exists.
 if [ -z "$(which inotifywait)" ]; then
-    echo "$0: inotifywait is not installed"
+    >&2 echo "$0: inotifywait is not installed"
     exit 1
 fi
 
 # Ensure the python exists.
 if [ -z "$(which python)" ]; then
-    echo "$0: python is not installed"
+    >&2 echo "$0: python is not installed"
     exit 1
 fi
 
@@ -30,7 +30,7 @@ fi
 filename=$(basename -- "$1")
 outfile=$(mktemp --quiet --tmpdir=/tmp "XXXXXX${filename%.md}.html")
 if [ $? -ne 0 ]; then
-    echo "$0: Cannot create temporary output file"
+    >&2 echo "$0: Cannot create temporary output file"
     exit 1
 fi
 

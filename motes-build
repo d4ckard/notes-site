@@ -6,9 +6,9 @@
 
 set -e
 
-# Retrieve the arguments.
+# Ensure that the arguments are correct.
 if [ -z "$2" ]; then
-    echo "usage: $0 SRC-DIR DEST-DIR"
+    >&2 echo "usage: $0 SRC-DIR DEST-DIR"
     exit 1
 fi
 
@@ -17,7 +17,7 @@ dest="$2"
 
 # Ensure that the source directory exists.
 if [ ! -d "$src" ]; then
-    echo "$0: Failed to find source directory $src to build from"
+    >&2 echo "$0: Failed to find source directory $src to build from"
     exit 1
 fi
 
