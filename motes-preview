@@ -54,8 +54,7 @@ inotifywait --quiet \
 	    --monitor \
 	    --format "%e %w%f" \
 	    --event modify \
-	    "$1" \
-    | while read -r changed; do
+	    "$1" | while read -r changed; do
     echo "$changed"
     bash motes-convert "$1" "$outfile"
 done
