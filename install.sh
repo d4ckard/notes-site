@@ -23,8 +23,15 @@ if [ -z "$installpath" ]; then
     fi
 fi
 
+templatedir="$HOME/.local/share/pandoc/templates"
+if [ ! -d "$templatedir" ]; then
+    mkdir -p "$templatedir"
+    echo "Created pandoc data directory for templates $templatedir"
+fi
 
 set -x
+
+cp motes.html "$templatedir/"
 
 cp motes-build "$installpath/"
 cp motes-convert "$installpath/"

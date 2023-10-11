@@ -51,9 +51,6 @@ fi
 pandoc --from=markdown \
        --to=html \
        --standalone \
-       --template=template.html \
-       --include-in-header=style.html \
+       --template=motes.html \
        --mathjax \
-       $filter \
-       --output="$2" \
-       "$1"
+       $filter --output="$2" "$1"
