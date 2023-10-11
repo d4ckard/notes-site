@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+# Share the given note by generating a QR code that
+# points to the file's URL.
+
+# Share the note behind the given file by printing a QR
+# code that points to the web URL of this file. The URL
+# is based on the value of MOTES_URL. MOTES_URL should
+# point to the place on the web where the root of your
+# notes reside. E.g. if your notes are hosted at
+# https://example.com/notes, then this should be the value
+# of MOTES_URL.
+
+set -e
+
+# Ensure argument is OK.
+if [ -z "$1" ]; then
+    >&2 echo "usage: $0 FILE"
+    exit 1
+fi
+
+if [ -z "${MOTES_URL}" ]; then
+    >&2 echo "$0: \$MOTES_URL is empty. Set it to share notes"
+    exit 1
+fi
+
+
+# Check that all tools are installed.
+if [ ! -x "$(command -v git)" ]; then
+    >&2 echo "$0: git is not installed"
+    exit 1
+fi
+
+if [ ! -x "$(command -v qrencode)" ]; then
+    >&2 echo "$0: qrencode is not installed"
+    exit 1
+fi
+
+if [ ! -x "$(command -v motes-push)" ]; then
+    >&2 echo "$0: Failed to find motes-push in PATH"
+    exit 1
+fi
+
+
+# Make sure local changes are pushed. Otherwise, newly added
+# files might not exist on the website, or changes might be
+# missing.
+if [ "$(git status --porcelain)" ]; then
+    echo "$0: There are local changes. Pushing them first."
+    motes-push
+fi
+
+# Ensure that the file extension is correct.
+ext="${1##*.}"
+if [ "$ext" != "md" ]; then
+    >&2 echo "$0: Unsupported file extension $ext of $1"
+    >&2 echo "$0: Only Markdown files are accepted (they end with .md)"
+    exit 1
+fi
+
+# Get the path to $1 with respect to the repository root.
+# Since the repository's directory structure is duplicated on the
+# website, this path will lead to the same note as the local file
+# when appending it to MOTES_URL.
+realpath="$(realpath "$1")"
+workroot="$(git rev-parse --show-toplevel)"
+path="${realpath#$workroot}"
+path="${path%.md}.html"
+
+path="${path#/}"
+url="${MOTES_URL%/}"
+encode="$url/$path"
+
+echo "$encode"
+qrencode --type=UTF8i --margin=2 "$encode"
