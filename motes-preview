@@ -9,7 +9,7 @@ set -e
 
 # Ensure arguments are OK.
 if [ -z  "$1" ]; then
-    >&2 echo "usage: $0 NOTE-FILE"
+    >&2 echo "usage: $0 FILE"
     exit 1
 fi
 
