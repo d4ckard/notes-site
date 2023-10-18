@@ -38,3 +38,14 @@ cp motes-convert "$installpath/"
 cp motes-preview "$installpath/"
 cp motes-push "$installpath/"
 cp motes-share "$installpath"
+
+set +x
+
+echo ""
+echo "All scripts were installed successfully!"
+echo ""
+echo "Set MOTES_URL to the URL where your notes can be found and"
+echo "export it in your configuration file of choice (e.g. .bashrc)."
+echo ""
+echo "See the commentary in motes.el if you want to find out how to"
+echo "use the scripts you just installed with Emacs."
