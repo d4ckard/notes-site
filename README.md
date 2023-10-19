@@ -115,7 +115,7 @@ jobs:
 
 After GitHub is done building your site for the first time, go back to "Pages" in the settings tab. There you'll see it say "Your site is live at", followed by a link. **That link is what you should export as `MOTES_URL`!**
 
-You can checkout [this example repository](https://github.com/d4ckard/motes-example) to see how a repository might look after following all the above steps. The `MOTES_URL` for that repository is `http://thasso.xyz/motes-example/`. The HTML version of the `hello.md` file in the repository's root can be found [here](http://thasso.xyz/motes-example/hello.html).
+You can checkout [this example repository](https://github.com/d4ckard/motes-example) to see how a repository might look after following all the above steps. The `MOTES_URL` for that repository is `https://thasso.xyz/motes-example/`. The HTML version of the `hello.md` file in the repository's root can be found [here](https://thasso.xyz/motes-example/hello.html). I'd encourage you to check out the [source of page `hello.md`](https://github.com/d4ckard/motes-example/blob/main/hello.md?plain=1), to see how to write notes for Motes.
 
 ## Scripts
 
@@ -154,8 +154,8 @@ site
 
 `motes-preview` is really fun! It only requires the name of a Markdown document as its only argument, and it will convert that document and open it in your browser to preview. The output HTML document is automatically created in `/tmp/`, and deleted once the scrip ends. `motes-preview` also watches the given file for changes and updates the output document under the same name every time the input changes.
 
-`motes-share` also requires the name of a Markdown document as its only argument. If there are any local changes, `motes-share` will run `motes-push` to synchronize them with the remote. Based on the URL in `MOTES_URL` (see [installation](#installation)), it then displays a QR code that links to the online HTML version of the given Markdown document. It also prints the link itself in case you just want to copy it.
+`motes-share` also requires the name of a Markdown document as its only argument. If there are any local changes, `motes-share` will run `motes-push` to synchronize them with the remote. Based on the URL in `MOTES_URL` (see [usage](#usage)), it then displays a QR code that links to the online HTML version of the given Markdown document. It also prints the link itself in case you just want to copy it.
 
 ## Feedback
 
-I'd be happy to get your feedback if you try to use Motes yourselves. Feel free to [send me an email](mailto:d4kd@proton.me) or [open an issue](https://github.com/d4ckard/motes/issues) if you have suggestions or find some mistake. I'm happy to answer any questions on how to use Motes, and improve the explanations found here..
+I'd be happy to get your feedback if you try to use Motes yourselves. Feel free to [send me an email](mailto:d4kd@proton.me) or [open an issue](https://github.com/d4ckard/motes/issues) if you have suggestions or find some mistake. I'm happy to answer any questions on how to use Motes, and improve the explanations found here.

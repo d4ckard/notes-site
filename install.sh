@@ -6,22 +6,36 @@
 
 set -e
 
-installpath="$INSTALL_PATH"
+read -rp "Install path (default=\"$HOME/bin\"): " maybeinstall
+if [ -z "$maybeinstall" ]; then
+    maybeinstall="$HOME/bin"
+fi
+
+maybeinstall="$(echo "$maybeinstall" | envsubst)"
+
+installpath=""
+previous_IFS="$IFS"
+export IFS=":"
+for p in $PATH; do
+    [ "$p" = "$maybeinstall" ] && installpath="$maybeinstall"
+done
+export IFS="$previous_IFS"
 
 if [ -z "$installpath" ]; then
-    previous_IFS="$IFS"
-    export IFS=":"
-    for p in $PATH; do
-	[ "$p" = "$HOME/bin" ] && installpath="$HOME/bin"
-    done
-    export IFS="$previous_IFS"
-
-    if [ -z "$installpath" ]; then
-	>&2 echo "$HOME/bin is not part of \$PATH"
-	>&2 echo "Add it to \$PATH or set the \$INSTALL_PATH variable to use another path"
-	exit 1
-    fi
+    >&2 echo "$maybeinstall is not part of PATH"
+    >&2 echo "Choose another install path or add it to PATH"
+    exit 1
 fi
+
+echo "Installing scripts in $installpath"
+
+set -x
+cp motes-build "$installpath/"
+cp motes-convert "$installpath/"
+cp motes-preview "$installpath/"
+cp motes-push "$installpath/"
+cp motes-share "$installpath/"
+set +x
 
 templatedir="$HOME/.local/share/pandoc/templates"
 if [ ! -d "$templatedir" ]; then
@@ -29,20 +43,14 @@ if [ ! -d "$templatedir" ]; then
     echo "Created pandoc data directory for templates $templatedir"
 fi
 
+echo "Installing template in $templatedir"
+
 set -x
-
 cp motes.html "$templatedir/"
-
-cp motes-build "$installpath/"
-cp motes-convert "$installpath/"
-cp motes-preview "$installpath/"
-cp motes-push "$installpath/"
-cp motes-share "$installpath"
-
 set +x
 
 echo ""
-echo "All scripts were installed successfully!"
+echo "The installation has been completed successfully."
 echo ""
 echo "Set MOTES_URL to the URL where your notes can be found and"
 echo "export it in your configuration file of choice (e.g. .bashrc)."
