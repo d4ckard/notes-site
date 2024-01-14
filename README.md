@@ -17,7 +17,7 @@ To install the scripts locally, you have to clone this repository and then run t
 Here is what the installation should look like:
 
 ``` shellsession
-~$ git clone https://github.com/d4ckard/motes.git
+~$ git clone https://github.com/thass0/motes.git
 Cloning into 'motes'...
 remote: Enumerating objects: 72, done.
 remote: Counting objects: 100% (72/72), done.
@@ -94,7 +94,7 @@ jobs:
     steps:
       # Build the notes found in this repository
       - name: Build the site
-        uses: d4ckard/motes@v1
+        uses: thass0/motes@v1
         with:
           from: ${{ github.repository }}
           to: 'site'
@@ -115,7 +115,7 @@ jobs:
 
 After GitHub is done building your site for the first time, go back to "Pages" in the settings tab. There you'll see it say "Your site is live at", followed by a link. **That link is what you should export as `MOTES_URL`!**
 
-You can checkout [this example repository](https://github.com/d4ckard/motes-example) to see how a repository might look after following all the above steps. The `MOTES_URL` for that repository is `https://thasso.xyz/motes-example/`. The HTML version of the `hello.md` file in the repository's root can be found [here](https://thasso.xyz/motes-example/hello.html). I'd encourage you to check out the [source of page `hello.md`](https://github.com/d4ckard/motes-example/blob/main/hello.md?plain=1), to see how to write notes for Motes.
+You can checkout [this example repository](https://github.com/thass0/motes-example) to see how a repository might look after following all the above steps. The `MOTES_URL` for that repository is `https://thasso.xyz/motes-example/`. The HTML version of the `hello.md` file in the repository's root can be found [here](https://thasso.xyz/motes-example/hello.html). I'd encourage you to check out the [source of page `hello.md`](https://github.com/thass0/motes-example/blob/main/hello.md?plain=1), to see how to write notes for Motes.
 
 ## Scripts
 
@@ -158,4 +158,4 @@ site
 
 ## Feedback
 
-I'd be happy to get your feedback if you try to use Motes yourselves. Feel free to [send me an email](mailto:d4kd@proton.me) or [open an issue](https://github.com/d4ckard/motes/issues) if you have suggestions or find some mistake. I'm happy to answer any questions on how to use Motes, and improve the explanations found here.
+I'd be happy to get your feedback if you try to use Motes yourselves. Feel free to [send me an email](mailto:d4kd@proton.me) or [open an issue](https://github.com/thass0/motes/issues) if you have suggestions or find some mistake. I'm happy to answer any questions on how to use Motes, and improve the explanations found here.

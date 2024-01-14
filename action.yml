@@ -14,7 +14,7 @@ runs:
     - name: Checkout scripts
       uses: actions/checkout@v4
       with:
-        repository: d4ckard/motes
+        repository: thass0/motes
     # Checkout the notes into their own nested directory.
     - name: Checkout notes
       uses: actions/checkout@v4
